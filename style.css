@@ -305,7 +305,7 @@ footer { background: var(--secondary-color); color:#eee; padding: 23px 0; text-a
     flex: 1;
   }
   .edu-institute {
-    color: #49f27f;
+    color: #6c63ff;
     font-size: 1.3rem;
     margin-bottom: 6px;
     font-weight: 600;
@@ -321,7 +321,7 @@ footer { background: var(--secondary-color); color:#eee; padding: 23px 0; text-a
     color: #c8c8db;
   }
   .edu-gpa { font-weight: 500; }
-  .edu-lab, .edu-project { color: #e9e970; font-size: 0.98rem;}
+  .edu-lab, .edu-project { color: #e6e6e6; font-size: 0.98rem;}
   .edu-courses {
     margin-top: 8px;
     color: #e6e6e6;
