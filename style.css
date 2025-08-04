@@ -282,3 +282,66 @@ footer { background: var(--secondary-color); color:#eee; padding: 23px 0; text-a
     .nav-links li { margin: 16px 0; }
     .hamburger { display: flex;}
 }
+
+.education-modern-list {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+  .education-modern-card {
+    display: flex;
+    align-items: center;
+    background: #18191c;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    padding: 34px 28px;
+    justify-content: space-between;
+    transition: transform 0.25s;
+  }
+  .education-modern-card:hover {
+    transform: translateY(-6px) scale(1.02);
+  }
+  .edu-text {
+    flex: 1;
+  }
+  .edu-institute {
+    color: #49f27f;
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .edu-degree {
+    margin-bottom: 5px;
+    color: #fafafd;
+    font-weight: 500;
+  }
+  .edu-date, .edu-gpa, .edu-lab, .edu-project {
+    font-size: 1rem;
+    margin-bottom: 4px;
+    color: #c8c8db;
+  }
+  .edu-gpa { font-weight: 500; }
+  .edu-lab, .edu-project { color: #e9e970; font-size: 0.98rem;}
+  .edu-courses {
+    margin-top: 8px;
+    color: #e6e6e6;
+    font-size: 0.98rem;
+  }
+  .edu-logo {
+    flex-shrink: 0;
+    margin-left: 40px;
+  }
+  .edu-logo img {
+    width: 74px;
+    height: 74px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #232323;
+    border: 2px solid #35383844;
+    box-shadow: 0 2px 8px #13131361;
+  }
+  @media (max-width: 700px) {
+    .education-modern-card { flex-direction: column; align-items: flex-start; }
+    .edu-logo { margin: 16px 0 0 0;}
+  }
+  
