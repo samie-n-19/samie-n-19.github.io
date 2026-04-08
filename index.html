@@ -33,6 +33,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:68px;background:rgba(3,7,18,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-cv{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#000;background:var(--cyan);padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:500;transition:all .2s;white-space:nowrap;}
+.nav-cv:hover{background:var(--green);box-shadow:0 0 20px rgba(0,240,255,.35);transform:translateY(-1px);}
 .nav-logo{font-family:var(--display);font-size:26px;letter-spacing:3px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;}
 .nav-links{display:flex;gap:36px;list-style:none;}
 .nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative;}
@@ -57,6 +59,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:cen
 .btn-glow:hover{background:rgba(0,240,255,.08);box-shadow:0 0 40px rgba(0,240,255,.28);transform:translateY(-2px);}
 .btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);}
 .btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25);transform:translateY(-2px);}
+.btn-cv{background:rgba(0,245,160,.1);color:var(--green);border:1px solid rgba(0,245,160,.4);}
+.btn-cv:hover{background:rgba(0,245,160,.18);box-shadow:0 0 28px rgba(0,245,160,.25);transform:translateY(-2px);}
 .hero-stats{display:flex;gap:56px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .95s forwards;}
 .stat{display:flex;flex-direction:column;}
 .stat-num{font-family:var(--display);font-size:40px;letter-spacing:2px;line-height:1;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -74,6 +78,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:cen
 .cdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;transition:all .3s;padding:0;}
 .cdot.active{background:var(--cyan);box-shadow:0 0 10px var(--cyan);width:22px;border-radius:3px;}
 .hero-content{position:relative;z-index:2;}
+
+/* VIDEO */
+.yt-wrap{position:relative;width:100%;padding-bottom:56.25%;border-radius:8px;overflow:hidden;margin-bottom:20px;border:1px solid var(--border);}
+.yt-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
 
 /* SECTION */
 .sw{position:relative;z-index:1;padding:100px 56px;max-width:1260px;margin:0 auto;}
@@ -238,6 +246,7 @@ footer span{color:var(--pink);}
     <li><a href="#publications">Publications</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a class="nav-cv" href="Samruddhi_Naukudkar_Resume.pdf" download>↓ Resume</a>
 </nav>
 
 <!-- HERO -->
@@ -267,6 +276,7 @@ footer span{color:var(--pink);}
     <a class="btn btn-pink" href="#contact">Get In Touch</a>
     <a class="btn btn-glow" href="#projects">View Projects</a>
     <a class="btn btn-ghost" href="https://github.com/samie-n-19" target="_blank">GitHub ↗</a>
+    <a class="btn btn-cv" href="Samruddhi_Naukudkar_Resume.pdf" download>↓ Download CV</a>
   </div>
   <div class="hero-stats">
     <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years Industry</span></div>
@@ -414,6 +424,7 @@ footer span{color:var(--pink);}
 
     <div class="proj-card glass feat reveal">
       <span class="pbadge pk">IROS 2025 · Published</span>
+
       <div class="pcat">Robotics · Embedded · Manipulation</div>
       <div class="ptitle">VIVF Gripper — Vibration-Induced Friction Modulation</div>
       <div class="pdesc">Novel robotic gripper using ERM actuators to modulate surface friction via vibration. Enables controlled in-hand sliding & rolling. Full embedded electronics system, automated ROS2 data pipeline with AprilTag, and a physics-based sim with &gt;90% experimental agreement.</div>
@@ -421,13 +432,16 @@ footer span{color:var(--pink);}
       <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
     </div>
 
-    <div class="proj-card glass reveal">
+    <div class="proj-card glass reveal" id="visiondrive">
       <span class="pbadge">Computer Vision</span>
       <div class="pcat">Autonomous Driving</div>
       <div class="ptitle">VisionDrive — Tesla FSD Dashboard</div>
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/pOgRIHvWpV8" title="VisionDrive Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
       <div class="pdesc">YOLOv8 + Mask R-CNN multi-camera object detection. Depth Anything V2 monocular depth. Surround-view Tesla FSD-style interface.</div>
       <div class="ptags"><span class="ptag">YOLOv8</span><span class="ptag">Mask R-CNN</span><span class="ptag">Depth Anything V2</span><span class="ptag">GPU Pipeline</span></div>
-      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19/CV-EinsteinVision" target="_blank">↗ GitHub</a></div>
     </div>
 
     <div class="proj-card glass reveal">
@@ -436,7 +450,7 @@ footer span{color:var(--pink);}
       <div class="ptitle">Buildings Built in Minutes — SfM & NeRF</div>
       <div class="pdesc">3D reconstruction pipeline: SfM (feature matching, pose estimation, triangulation) + NeRF for novel view synthesis from sparse 2D images.</div>
       <div class="ptags"><span class="ptag">NeRF</span><span class="ptag">SfM</span><span class="ptag">PyTorch</span><span class="ptag">3D Reconstruction</span></div>
-      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19/Buildings-built-in-minutes" target="_blank">↗ GitHub</a></div>
     </div>
 
     <div class="proj-card glass reveal">
@@ -454,7 +468,7 @@ footer span{color:var(--pink);}
       <div class="ptitle">Two Towers — Task & Motion Planning</div>
       <div class="pdesc">TAMP system combining PDDL symbolic reasoning with OMPL geometric planning for autonomous block assembly.</div>
       <div class="ptags"><span class="ptag">PDDL</span><span class="ptag">OMPL</span><span class="ptag">Python</span><span class="ptag">TAMP</span></div>
-      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19/Motion_Planning_Project_Building_the_Two_Towers" target="_blank">↗ GitHub</a></div>
     </div>
 
     <div class="proj-card glass reveal">
@@ -463,7 +477,7 @@ footer span{color:var(--pink);}
       <div class="ptitle">RL for Mixed Autonomous Traffic</div>
       <div class="pdesc">Multi-agent PPO in SUMO + Flow optimizing mixed-autonomy traffic. Improved throughput and reduced congestion vs. baseline.</div>
       <div class="ptags"><span class="ptag">PPO</span><span class="ptag">SUMO</span><span class="ptag">Multi-Agent RL</span><span class="ptag">Python</span></div>
-      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/jrwplm10/RL_Project_Group_8" target="_blank">↗ GitHub</a></div>
     </div>
 
     <div class="proj-card glass reveal">
@@ -472,7 +486,7 @@ footer span{color:var(--pink);}
       <div class="ptitle">Panorama Stitching Pipeline</div>
       <div class="pdesc">Full pipeline using OpenCV, RANSAC homography, feature matching, Poisson Blending, and HomographyNet.</div>
       <div class="ptags"><span class="ptag">OpenCV</span><span class="ptag">RANSAC</span><span class="ptag">Homography</span><span class="ptag">Poisson Blending</span></div>
-      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/SarveshNair/My-AutoPano" target="_blank">↗ GitHub</a></div>
     </div>
 
     <div class="proj-card glass reveal">
@@ -481,7 +495,7 @@ footer span{color:var(--pink);}
       <div class="ptitle">Classical & DL Edge Detection</div>
       <div class="pdesc">Boundary detection with DoG, Leung-Malik & Gabor filters. ResNet/DenseNet CNNs at 90% on CIFAR-10. Classical vs. learned comparison.</div>
       <div class="ptags"><span class="ptag">ResNet</span><span class="ptag">DenseNet</span><span class="ptag">Gabor</span><span class="ptag">CIFAR-10</span></div>
-      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19/CV-Project0-Alohomora" target="_blank">↗ GitHub</a></div>
     </div>
 
     <div class="proj-card glass reveal">
@@ -507,20 +521,11 @@ footer span{color:var(--pink);}
       <div class="pub-venue-row"><span class="pub-venue">IEEE/RSJ IROS 2025</span><span class="pub-yr">Hangzhou, China · pp. 142–149</span></div>
       <div class="pub-title">Vibration-induced Friction Modulation to Enable Controlled Sliding for In-hand Manipulation</div>
       <div class="pub-authors"><strong>S. Naukudkar</strong>, S. Mane, A. Jagetia, A. S. Morgan, B. Calli</div>
-      <a class="pub-lnk" href="#" target="_blank">Read Paper ↗</a>
-    </div>
-    <div class="pub-card glass reveal">
+      <a class="pub-lnk" href="https://ieeexplore.ieee.org/abstract/document/11247140" target="_blank">Read Paper ↗</a>
       <div class="pub-venue-row"><span class="pub-venue">IJEREEE</span><span class="pub-yr">Volume 10, Issue 10</span></div>
       <div class="pub-title">Enhancing Operator Safety in Manufacturing: A Cost-Efficient Two-Hand Safety Device for Press Machines</div>
       <div class="pub-authors"><strong>S. Naukudkar</strong>, S. Mathew</div>
-      <a class="pub-lnk" href="#" target="_blank">Read Paper ↗</a>
-    </div>
-  </div>
-</div>
-
-<div class="hr"></div>
-
-<!-- ACHIEVEMENTS -->
+      <a class="pub-lnk" href="https://ijereee.com/viewabstract.php?id=16545&volume=Volume10&issue=Issue10" target="_blank">Read Paper ↗</a>
 <div class="sw" id="achievements">
   <p class="stag reveal">Recognition</p>
   <h2 class="stitle reveal">ACHIEVEMENTS</h2>
@@ -553,7 +558,7 @@ footer span{color:var(--pink);}
   <div class="contact-cards reveal">
     <a class="ccard" href="mailto:naukudkar.samruddhi@gmail.com"><span class="c-ico">✉️</span><span class="c-lbl">Email</span><span class="c-val">Gmail</span></a>
     <a class="ccard" href="https://github.com/samie-n-19" target="_blank"><span class="c-ico">🐙</span><span class="c-lbl">GitHub</span><span class="c-val">samie-n-19</span></a>
-    <a class="ccard" href="https://www.linkedin.com/in/samruddhi-naukudkar/" target="_blank"><span class="c-ico">💼</span><span class="c-lbl">LinkedIn</span><span class="c-val">Connect</span></a>
+    <a class="ccard" href="https://www.linkedin.com/in/samruddhi-naukudkar-9b5670193/" target="_blank"><span class="c-ico">💼</span><span class="c-lbl">LinkedIn</span><span class="c-val">Connect</span></a>
     <a class="ccard" href="https://samie-n-19.github.io/" target="_blank"><span class="c-ico">🌐</span><span class="c-lbl">Portfolio</span><span class="c-val">Live Site</span></a>
   </div>
 </div>
