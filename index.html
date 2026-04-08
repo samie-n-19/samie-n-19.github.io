@@ -1,312 +1,593 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Samruddhi Naukudkar - Portfolio</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Samruddhi Naukudkar — Robotics & CV Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:      #030712;
+  --bg2:     #080f1e;
+  --bg3:     #0d1a2e;
+  --border:  rgba(0,240,255,0.12);
+  --borderh: rgba(0,240,255,0.5);
+  --cyan:    #00f0ff;
+  --pink:    #ff2060;
+  --purple:  #9b5de5;
+  --green:   #00f5a0;
+  --text:    #e8f0ff;
+  --muted:   #5a7090;
+  --display: 'Bebas Neue', sans-serif;
+  --body:    'Outfit', sans-serif;
+  --mono:    'IBM Plex Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.65;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+.cursor{width:12px;height:12px;background:var(--cyan);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen;}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(0,240,255,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .2s,height .2s,border-color .2s;}
+
+/* BG */
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.mesh{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 70% 55% at 10% 20%,rgba(0,240,255,.07) 0%,transparent 60%),radial-gradient(ellipse 55% 45% at 92% 78%,rgba(255,32,96,.07) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 50% 50%,rgba(155,93,229,.04) 0%,transparent 70%);pointer-events:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:68px;background:rgba(3,7,18,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--display);font-size:26px;letter-spacing:3px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover{color:var(--cyan);}
+.nav-links a:hover::after{transform:scaleX(1);}
+
+/* HERO */
+#home{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 56px 80px;z-index:1;overflow:hidden;}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;opacity:0;animation:fadeUp .7s .2s forwards;display:flex;align-items:center;gap:14px;}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan));}
+.hero-name{font-family:var(--display);font-size:clamp(68px,11vw,144px);letter-spacing:4px;line-height:.9;color:var(--text);margin-bottom:4px;opacity:0;animation:fadeUp .8s .35s forwards;}
+.hero-name .glow{background:linear-gradient(135deg,var(--cyan) 0%,var(--purple) 50%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 28px rgba(0,240,255,.3));}
+.hero-role{font-family:var(--mono);font-size:clamp(13px,1.8vw,18px);color:var(--muted);letter-spacing:.08em;margin-bottom:32px;opacity:0;animation:fadeUp .8s .5s forwards;}
+.hero-role span{color:var(--pink);}
+.hero-desc{max-width:540px;font-size:17px;color:#6878a0;line-height:1.8;margin-bottom:48px;opacity:0;animation:fadeUp .8s .65s forwards;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:72px;opacity:0;animation:fadeUp .8s .8s forwards;}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:14px 30px;border-radius:4px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s;border:none;cursor:none;}
+.btn-pink{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 8px 32px rgba(255,32,96,.3);}
+.btn-pink:hover{box-shadow:0 12px 48px rgba(255,32,96,.5);transform:translateY(-2px);}
+.btn-glow{background:transparent;color:var(--cyan);border:1px solid var(--cyan);box-shadow:0 0 20px rgba(0,240,255,.12),inset 0 0 20px rgba(0,240,255,.04);}
+.btn-glow:hover{background:rgba(0,240,255,.08);box-shadow:0 0 40px rgba(0,240,255,.28);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25);transform:translateY(-2px);}
+.hero-stats{display:flex;gap:56px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .95s forwards;}
+.stat{display:flex;flex-direction:column;}
+.stat-num{font-family:var(--display);font-size:40px;letter-spacing:2px;line-height:1;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-top:4px;}
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:0;animation:fadeIn 1s 1.8s forwards;}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--cyan),transparent);}
+@keyframes scrollB{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* SECTION */
+.sw{position:relative;z-index:1;padding:100px 56px;max-width:1260px;margin:0 auto;}
+.stag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.stag::before{content:'//';color:var(--pink);font-size:14px;}
+.stitle{font-family:var(--display);font-size:clamp(40px,6vw,70px);letter-spacing:3px;line-height:1;color:var(--text);margin-bottom:56px;}
+.stitle .ac{background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hr{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,.18),rgba(255,32,96,.18),transparent);position:relative;z-index:1;}
+
+/* GLASS */
+.glass{background:rgba(8,15,30,.65);border:1px solid var(--border);backdrop-filter:blur(12px);border-radius:12px;transition:border-color .3s,box-shadow .3s,transform .3s;}
+.glass:hover{border-color:var(--borderh);box-shadow:0 0 40px rgba(0,240,255,.07),0 20px 60px rgba(0,0,0,.4);transform:translateY(-4px);}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:start;}
+.about-text{font-size:17px;color:#6878a0;line-height:1.8;margin-bottom:20px;}
+.about-text strong{color:var(--cyan);font-weight:500;}
+.about-links{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.alink{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;padding:13px 18px;border-radius:8px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);transition:all .25s;}
+.alink:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,240,255,.04);transform:translateX(6px);}
+.alink .ico{font-size:15px;width:20px;text-align:center;}
+.lang-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;}
+.lpill{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:7px 16px;border-radius:100px;border:1px solid;}
+.lpill.a{border-color:var(--cyan);color:var(--cyan);background:rgba(0,240,255,.06);}
+.lpill.b{border-color:rgba(155,93,229,.5);color:var(--purple);background:rgba(155,93,229,.06);}
+.lpill.c{border-color:rgba(255,255,255,.12);color:var(--muted);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;}
+.skill-card{padding:28px;position:relative;overflow:hidden;}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:12px 12px 0 0;}
+.c1::before{background:linear-gradient(90deg,var(--cyan),var(--purple));}
+.c2::before{background:linear-gradient(90deg,var(--purple),var(--pink));}
+.c3::before{background:linear-gradient(90deg,var(--pink),var(--cyan));}
+.c4::before{background:linear-gradient(90deg,var(--green),var(--cyan));}
+.c5::before{background:linear-gradient(90deg,var(--purple),var(--green));}
+.c6::before{background:linear-gradient(90deg,var(--pink),var(--purple));}
+.skill-head{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:18px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);flex-shrink:0;}
+.c2 .dot{background:var(--pink);box-shadow:0 0 8px var(--pink);}
+.c3 .dot{background:var(--purple);box-shadow:0 0 8px var(--purple);}
+.c4 .dot{background:var(--green);box-shadow:0 0 8px var(--green);}
+.c5 .dot{background:var(--purple);box-shadow:0 0 8px var(--purple);}
+.c6 .dot{background:var(--pink);box-shadow:0 0 8px var(--pink);}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.stg{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:4px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);color:#5a7090;transition:all .2s;}
+.stg:hover{border-color:rgba(0,240,255,.3);color:var(--cyan);background:rgba(0,240,255,.05);}
+
+/* TIMELINE */
+.timeline{padding-left:36px;position:relative;}
+.timeline::before{content:'';position:absolute;left:0;top:12px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--cyan),var(--purple),var(--pink),transparent);box-shadow:0 0 12px rgba(0,240,255,.3);}
+.tli{position:relative;margin-bottom:60px;}
+.tli::before{content:'';position:absolute;left:-40px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(0,240,255,.1),0 0 16px rgba(0,240,255,.5);}
+.tl-date{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px;}
+.tl-co{font-family:var(--display);font-size:26px;letter-spacing:2px;color:var(--text);}
+.tl-role{font-family:var(--mono);font-size:12px;color:var(--pink);text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px;}
+.tl-ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.tl-ul li{font-size:15px;color:#5a7090;padding-left:22px;position:relative;line-height:1.65;}
+.tl-ul li::before{content:'▸';position:absolute;left:0;color:var(--purple);font-size:10px;top:5px;}
+.tl-ul strong{color:var(--green);font-weight:500;}
+
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.edu-card{padding:36px;position:relative;overflow:hidden;}
+.edu-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(0,240,255,.06) 0%,transparent 70%);pointer-events:none;}
+.edu-uni{font-family:var(--display);font-size:23px;letter-spacing:2px;color:var(--text);margin-bottom:4px;}
+.edu-deg{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin-bottom:6px;}
+.edu-yr{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:20px;}
+.edu-gpa-wrap{display:flex;align-items:baseline;gap:6px;margin-bottom:20px;}
+.edu-gpa{font-family:var(--display);font-size:48px;letter-spacing:2px;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.edu-gpa-lbl{font-family:var(--mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+.edu-info{font-size:13.5px;color:var(--muted);line-height:1.75;}
+.edu-info strong{color:#7080a0;font-weight:500;}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.proj-card{padding:28px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .3s;}
+.proj-card:hover::before{opacity:1;}
+.proj-card.feat{grid-column:span 2;}
+.pbadge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:100px;background:rgba(0,240,255,.1);border:1px solid rgba(0,240,255,.3);color:var(--cyan);margin-bottom:12px;width:fit-content;}
+.pbadge.pk{background:rgba(255,32,96,.1);border-color:rgba(255,32,96,.3);color:var(--pink);}
+.pcat{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.ptitle{font-family:var(--display);font-size:21px;letter-spacing:1.5px;color:var(--text);margin-bottom:12px;line-height:1.15;}
+.proj-card.feat .ptitle{font-size:27px;}
+.pdesc{font-size:14px;color:#4a6080;line-height:1.7;flex:1;margin-bottom:20px;}
+.ptags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.ptag{font-family:var(--mono);font-size:10px;padding:4px 9px;border-radius:3px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);color:#4a6080;transition:all .2s;}
+.ptag:hover{border-color:var(--purple);color:var(--purple);}
+.pfoot{display:flex;gap:16px;align-items:center;margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.05);}
+.plink{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);text-decoration:none;display:flex;align-items:center;gap:6px;transition:all .2s;}
+.plink:hover{color:var(--pink);gap:10px;}
+
+/* PUBLICATIONS */
+.pub-stack{display:flex;flex-direction:column;gap:20px;}
+.pub-card{padding:32px;}
+.pub-venue-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.pub-venue{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);}
+.pub-yr{font-family:var(--mono);font-size:10px;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:2px 8px;border-radius:3px;}
+.pub-title{font-family:var(--display);font-size:22px;letter-spacing:1px;color:var(--text);margin-bottom:8px;line-height:1.3;}
+.pub-authors{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.pub-authors strong{color:#7080a0;}
+.pub-lnk{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.pub-lnk:hover{gap:12px;color:var(--green);}
+
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.ach-card{padding:32px;text-align:center;}
+.ach-ico{font-size:36px;margin-bottom:16px;display:block;filter:drop-shadow(0 0 14px rgba(0,240,255,.3));}
+.ach-title{font-family:var(--display);font-size:18px;letter-spacing:1.5px;color:var(--text);margin-bottom:10px;}
+.ach-desc{font-size:13.5px;color:var(--muted);line-height:1.65;}
+
+/* CONTACT */
+.contact-intro{font-size:18px;color:#4a6080;max-width:500px;margin:0 auto 56px;line-height:1.75;}
+.contact-cards{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+.ccard{display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px 36px;border-radius:12px;text-decoration:none;background:rgba(8,15,30,.65);border:1px solid var(--border);backdrop-filter:blur(12px);transition:all .3s;min-width:155px;}
+.ccard:hover{transform:translateY(-6px);}
+.ccard:nth-child(1):hover{border-color:var(--cyan);box-shadow:0 0 40px rgba(0,240,255,.14);}
+.ccard:nth-child(2):hover{border-color:var(--pink);box-shadow:0 0 40px rgba(255,32,96,.14);}
+.ccard:nth-child(3):hover{border-color:var(--purple);box-shadow:0 0 40px rgba(155,93,229,.14);}
+.ccard:nth-child(4):hover{border-color:var(--green);box-shadow:0 0 40px rgba(0,245,160,.14);}
+.c-ico{font-size:26px;}
+.c-lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);}
+.c-val{font-size:14px;font-weight:500;color:var(--text);}
+
+/* FOOTER */
+footer{text-align:center;padding:28px 48px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;position:relative;z-index:1;}
+footer span{color:var(--pink);}
+
+/* ANIMS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.up{opacity:1;transform:none;}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .nav-links{display:none;}
+  #home,.sw{padding:100px 24px 60px;}
+  .about-layout,.edu-grid{grid-template-columns:1fr;}
+  .proj-grid{grid-template-columns:1fr;}
+  .proj-card.feat{grid-column:span 1;}
+  .ach-grid{grid-template-columns:1fr;}
+  .cursor,.cursor-ring{display:none;}
+  body{cursor:auto;}
+  .btn{cursor:pointer;}
+}
+</style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="logo">SN</div>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#education">Education</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#achievements">Achievements</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="hamburger">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-        </div>
-      </nav>
-    </div>
-  </header>
 
-  <!-- Hero Section with Carousel -->
-  <section id="home" class="hero">
-    <div class="carousel-container">
-      <div class="carousel">
-        <img src="images/slide1.jpg" class="carousel-img active" alt="Robot manipulation"/>
-        <img src="images/slide2.jpg" class="carousel-img" alt="Lab work"/>
-        <img src="images/slide3.jpg" class="carousel-img" alt="Simulation"/>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<canvas id="bgc"></canvas>
+<div class="mesh"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">SN</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <p class="hero-eyebrow">Robotics · Computer Vision · Research · IROS 2025</p>
+  <h1 class="hero-name"><span class="glow">SAMRUDDHI</span><br/>NAUKUDKAR</h1>
+  <p class="hero-role">Robotics & CV Engineer · <span>Graduate Researcher @ WPI MER Lab</span></p>
+  <p class="hero-desc">2+ years of industry experience building intelligent robotic systems, real-time vision pipelines, and embedded control architectures. Published at IROS 2025. M.S. Robotics at WPI.</p>
+  <div class="hero-actions">
+    <a class="btn btn-pink" href="#contact">Get In Touch</a>
+    <a class="btn btn-glow" href="#projects">View Projects</a>
+    <a class="btn btn-ghost" href="https://github.com/samie-n-19" target="_blank">GitHub ↗</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years Industry</span></div>
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">Publications</span></div>
+    <div class="stat"><span class="stat-num">3.75</span><span class="stat-label">M.S. GPA</span></div>
+    <div class="stat"><span class="stat-num">IROS</span><span class="stat-label">2025 Author</span></div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div>scroll</div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ABOUT -->
+<div class="sw" id="about">
+  <p class="stag reveal">Who I Am</p>
+  <h2 class="stitle reveal">ABOUT <span class="ac">ME</span></h2>
+  <div class="about-layout">
+    <div class="reveal">
+      <p class="about-text">I'm a <strong>Robotics & Automation</strong> graduate student at WPI, researching dexterous in-hand manipulation using vibration-induced friction modulation in the <strong>MER Lab</strong>. My work bridges hardware and software — from PCB design and embedded firmware to deep learning inference and cloud-connected backends.</p>
+      <p class="about-text">Before WPI, I built production healthcare systems at <strong>Persistent Systems</strong> using Java and AWS, engineered UI features for Zendesk in Node.js + React, and interned at <strong>DRDO</strong> designing EtherCAT controller PCBs.</p>
+      <p class="about-text">I thrive at the intersection of intelligent perception, physical systems, and real-world deployment.</p>
+      <div class="lang-row">
+        <span class="lpill a">English — Fluent</span>
+        <span class="lpill b">Japanese — Intermediate</span>
+        <span class="lpill c">German — Basics</span>
       </div>
     </div>
-    <div class="hero-content">
-      <h1>Hi, I'm <span>Samruddhi Naukudkar</span></h1>
-      <h2>Robotics Engineer & Full Stack Developer</h2>
-      <p>Specializing in dexterous manipulation, automation, and machine learning.</p>
-      <div class="cta-buttons">
-        <a href="#contact" class="btn primary-btn">Get In Touch</a>
-        <a href="#projects" class="btn secondary-btn">View My Work</a>
+    <div class="reveal">
+      <div class="about-links">
+        <div class="alink"><span class="ico">📍</span>Worcester, MA, USA</div>
+        <a class="alink" href="mailto:naukudkar.samruddhi@gmail.com"><span class="ico">✉️</span>naukudkar.samruddhi@gmail.com</a>
+        <a class="alink" href="https://github.com/samie-n-19" target="_blank"><span class="ico">🐙</span>github.com/samie-n-19</a>
+        <div class="alink"><span class="ico">🎓</span>WPI — M.S. Robotics & Automation</div>
+        <div class="alink"><span class="ico">🔬</span>MER Lab — Graduate Research Assistant</div>
+        <div class="alink"><span class="ico">🏆</span>IEEE Region 10 — 3rd Asia-Pacific</div>
+        <div class="alink"><span class="ico">🎙️</span>VP — IEEE RAS Chapter, WPI</div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container section-card">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <p>
-            Robotics & Automation professional with strong academic research experience and applied industry work at DRDO and Persistent Systems.
-            Passionate about leveraging robotics, reinforcement learning, embedded systems, and software to deliver innovative technological solutions.
-          </p>
-          <div class="personal-info">
-            <div class="info-item"><span class="info-title">Languages:</span> English (Fluent), Japanese (Intermediate), German (Basics)</div>
-            <div class="info-item"><span class="info-title">Location:</span> Worcester, MA, USA</div>
-            <div class="info-item"><span class="info-title">Email:</span> snaukudkar@wpi.edu</div>
-          </div>
-        </div>
-      </div>
+<div class="hr"></div>
+
+<!-- SKILLS -->
+<div class="sw" id="skills">
+  <p class="stag reveal">What I Work With</p>
+  <h2 class="stitle reveal">SKILLS &amp; <span class="ac">TOOLS</span></h2>
+  <div class="skills-grid">
+    <div class="skill-card glass c1 reveal">
+      <div class="skill-head"><div class="dot"></div>Robotics & Frameworks</div>
+      <div class="skill-tags"><span class="stg">ROS2</span><span class="stg">SLAM</span><span class="stg">MoveIt</span><span class="stg">OMPL</span><span class="stg">AprilTag</span><span class="stg">PDDL</span><span class="stg">Gazebo</span><span class="stg">MuJoCo</span><span class="stg">Genesis</span></div>
     </div>
-  </section>
-
-  <!-- Skills Section -->
-  <section id="skills">
-    <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-container">
-        <div class="skill-category">
-          <h3><i class="fa fa-code"></i> Programming</h3>
-          <div class="skill-items">
-            <div class="skill-item">Python</div>
-            <div class="skill-item">C/C++</div>
-            <div class="skill-item">Java</div>
-            <div class="skill-item">Embedded C</div>
-            <div class="skill-item">MATLAB</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fa fa-brain"></i> AI & Machine Learning</h3>
-          <div class="skill-items">
-            <div class="skill-item">Deep Learning</div>
-            <div class="skill-item">Reinforcement Learning</div>
-            <div class="skill-item">Computer Vision</div>
-            <div class="skill-item">PyTorch</div>
-            <div class="skill-item">TensorFlow</div>
-            <div class="skill-item">OpenCV</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fa fa-robot"></i> Robotics & Perception</h3>
-          <div class="skill-items">
-            <div class="skill-item">ROS2</div>
-            <div class="skill-item">SLAM</div>
-            <div class="skill-item">MoveIt</div>
-            <div class="skill-item">PCB Design - Altium</div>
-            <div class="skill-item">CAD/SolidWorks/Ansys</div>
-            <div class="skill-item">Microcontrollers</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fa fa-route"></i> Control & Navigation</h3>
-          <div class="skill-items">
-            <div class="skill-item">Path Planning</div>
-            <div class="skill-item">Kalman Filters</div>
-            <div class="skill-item">PID</div>
-            <div class="skill-item">MPC</div>
-            <div class="skill-item">Robot Dynamics</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3><i class="fa fa-microchip"></i> Embedded & Systems</h3>
-          <div class="skill-items">
-            <div class="skill-item">RTOS</div>
-            <div class="skill-item">PlatformIO</div>
-            <div class="skill-item">STM32</div>
-            <div class="skill-item">ESP32</div>
-            <div class="skill-item">Raspberry Pi</div>
-            <div class="skill-item">Jetson Nano</div>
-          </div>
-        </div>
-      </div>
+    <div class="skill-card glass c2 reveal">
+      <div class="skill-head"><div class="dot"></div>AI & Computer Vision</div>
+      <div class="skill-tags"><span class="stg">PyTorch</span><span class="stg">TensorFlow</span><span class="stg">OpenCV</span><span class="stg">YOLOv8</span><span class="stg">Mask R-CNN</span><span class="stg">NeRF</span><span class="stg">PPO / RL</span><span class="stg">CNNs</span><span class="stg">Depth Estimation</span></div>
     </div>
-  </section>
-
-  <!-- Experience Section -->
-  <section id="experience">
-    <div class="container">
-      <h2 class="section-title">Professional Experience</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Full Stack Developer</h3>
-            <h4>Persistent Systems</h4>
-            <p class="timeline-date">Aug 2022 - Aug 2024</p>
-            <ul class="timeline-description">
-              <li>Worked with Java, AWS S3 for Healthcare projects</li>
-              <li>Developed rich text messaging, UI features for Zendesk (Node.js, React)</li>
-            </ul>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Project Intern</h3>
-            <h4>Defense R&D Organization (DRDO), India</h4>
-            <p class="timeline-date">Oct 2021 - Mar 2022</p>
-            <ul class="timeline-description">
-              <li>Designed PCB schematics for robotics EtherCAT controller</li>
-              <li>Collaborated on electronics system for automation applications</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div class="skill-card glass c3 reveal">
+      <div class="skill-head"><div class="dot"></div>Languages</div>
+      <div class="skill-tags"><span class="stg">Python</span><span class="stg">C++</span><span class="stg">C</span><span class="stg">Embedded C</span><span class="stg">Java</span><span class="stg">MATLAB</span><span class="stg">Node.js</span><span class="stg">React</span></div>
     </div>
-  </section>
-
-  <!-- Education Section -->
-<section id="education">
-    <div class="container">
-      <h2 class="section-title">Education</h2>
-      <div class="education-modern-list">
-  
-        <div class="education-modern-card">
-          <div class="edu-text">
-            <h3 class="edu-institute">Worcester Polytechnic Institute</h3>
-            <div class="edu-degree">Master of Science in Robotics and Automation</div>
-            <div class="edu-date">Aug 2024 - Present</div>
-            <div class="edu-gpa">GPA: 3.8 / 4.0</div>
-            <div class="edu-lab"><b>Lab:</b> Manipulation & Environmental Robotics - MER Lab</div>
-            <div class="edu-project"><b>Project:</b> Vibration Induced Variable friction Dexterous In-hand manipulation</div>
-            <div class="edu-courses">
-              <b>Courses:</b> Foundation of Robotics, Robot Dynamics, Robot Control, Computer Vision, Motion Planning, Reinforcement Learning
-            </div>
-          </div>
-          <div class="edu-logo">
-            <img src="images/wpilogo.png" alt="WPI Logo"/>
-          </div>
-        </div>
-  
-        <div class="education-modern-card">
-          <div class="edu-text">
-            <h3 class="edu-institute">Savitribai Phule Pune University</h3>
-            <div class="edu-degree">Bachelor of Engineering in Electronics & Telecommunication</div>
-            <div class="edu-date">Aug 2018 - Aug 2022</div>
-            <div class="edu-gpa">GPA: 3.94 / 4.0</div>
-            <div class="edu-courses">
-              <b>Courses:</b> Digital Electronics, Microcontrollers, PCB Design, Signal and Systems
-            </div>
-          </div>
-          <div class="edu-logo">
-            <img src="images/Savitribai_Phule_Pune_University_Logo.png" alt="Pune Univ Logo"/>
-          </div>
-        </div>
-  
-      </div>
+    <div class="skill-card glass c4 reveal">
+      <div class="skill-head"><div class="dot"></div>Embedded & Hardware</div>
+      <div class="skill-tags"><span class="stg">RTOS</span><span class="stg">Arduino</span><span class="stg">ESP32</span><span class="stg">Raspberry Pi 4</span><span class="stg">NVIDIA Jetson</span><span class="stg">STM32</span><span class="stg">Altium PCB</span><span class="stg">RealSense</span></div>
     </div>
-  </section>
-  
-
-  <!-- Projects Section -->
-  <section id="projects">
-    <div class="container">
-      <h2 class="section-title">Projects</h2>
-      <div class="project-items">
-        <div class="project-item">
-          <div class="project-content">
-            <h3>RL for Mixed Autonomous Traffic Control</h3>
-            <p>Built RL-based simulations to optimize mixed AV-human traffic with PPO2 models in SUMO & Flow. Improved throughput and minimized congestion.</p>
-            <ul class="project-details">
-              <li>Environments: SUMO, Flow</li>
-              <li>Tech: Python, PPO2, Traffic Sim, Multi-Agent RL</li>
-            </ul>
-          </div>
-        </div>
-        <div class="project-item">
-          <div class="project-content">
-            <h3>Compost Monitoring System (WSN, IoT)</h3>
-            <p>Designed and coded a wireless network for temperature sensing in compost; sent SMS alerts leveraging GSM and custom Arduino firmware.</p>
-            <ul class="project-details">
-              <li>Tech: Arduino, Embedded Coding, GSM</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div class="skill-card glass c5 reveal">
+      <div class="skill-head"><div class="dot"></div>Control & Navigation</div>
+      <div class="skill-tags"><span class="stg">PID</span><span class="stg">MPC</span><span class="stg">Kalman Filters</span><span class="stg">Path Planning</span><span class="stg">Robot Dynamics</span><span class="stg">IMU Fusion</span><span class="stg">OptiTrack</span></div>
     </div>
-  </section>
-
-  <!-- Achievements Section -->
-  <section id="achievements">
-    <div class="container">
-      <h2 class="section-title">Achievements & Activities</h2>
-      <div class="achievements-items">
-        <div class="achievement-item">
-          <h3>IEEE Region 10 Award</h3>
-          <p>3rd in Asia-Pacific UG Project Contest 2022. Prize $100 and certificate.</p>
-        </div>
-        <div class="achievement-item">
-          <h3>Publication</h3>
-          <p>Enhancing Operator Safety in Manufacturing (Safe Device for Press Machines).</p>
-        </div>
-        <div class="achievement-item">
-          <h3>Leadership</h3>
-          <p>Vice-president, IEEE Robotics & Automation Society, WPI.</p>
-        </div>
-      </div>
+    <div class="skill-card glass c6 reveal">
+      <div class="skill-head"><div class="dot"></div>Tools & DevOps</div>
+      <div class="skill-tags"><span class="stg">Docker</span><span class="stg">CI/CD</span><span class="stg">Git</span><span class="stg">Linux</span><span class="stg">AWS S3</span><span class="stg">SolidWorks</span><span class="stg">Simulink</span><span class="stg">LabVIEW</span></div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2 class="section-title">Get In Touch</h2>
-      <div class="contact-content">
-        <div class="contact-info">
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <p>snaukudkar@wpi.edu</p>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <p>Worcester, MA</p>
-          </div>
-          <div class="social-links">
-            <a href="https://github.com/samie-n-19" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/samruddhi-naukudkar" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
-          </div>
-        </div>
-        <div class="contact-form">
-          <form id="contactForm">
-            <div class="form-group">
-              <input type="text" id="name" placeholder="Your Name" required/>
-            </div>
-            <div class="form-group">
-              <input type="email" id="email" placeholder="Your Email" required/>
-            </div>
-            <div class="form-group">
-              <input type="text" id="subject" placeholder="Subject" required/>
-            </div>
-            <div class="form-group">
-              <textarea id="message" placeholder="Your Message" required></textarea>
-            </div>
-            <button type="submit" class="btn primary-btn">Send Message</button>
-          </form>
-        </div>
-      </div>
+<div class="hr"></div>
+
+<!-- EXPERIENCE -->
+<div class="sw" id="experience">
+  <p class="stag reveal">Career</p>
+  <h2 class="stitle reveal">WORK <span class="ac">EXPERIENCE</span></h2>
+  <div class="timeline">
+    <div class="tli reveal">
+      <div class="tl-date">Aug 2025 – Present</div>
+      <div class="tl-co">MER Lab — WPI</div>
+      <div class="tl-role">Graduate Research Assistant</div>
+      <ul class="tl-ul">
+        <li>Engineered a novel robotic gripper using ERM actuators to modulate surface friction via vibration, enabling controlled in-hand sliding & rolling. Published at <strong>IROS 2025</strong>.</li>
+        <li>Built an automated ROS2 data acquisition pipeline with AprilTag vision tracking, cutting experimental iteration time by <strong>3.5×</strong>.</li>
+        <li>Developed a physics-based simulation framework predicting object motion with <strong>&gt;90%</strong> experimental agreement using vibration attenuation and Coulomb friction models.</li>
+      </ul>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Samruddhi Naukudkar. All Rights Reserved.</p>
+    <div class="tli reveal">
+      <div class="tl-date">Aug 2022 – Aug 2024</div>
+      <div class="tl-co">Persistent Systems</div>
+      <div class="tl-role">Software Engineer — Full Stack</div>
+      <ul class="tl-ul">
+        <li>Developed and deployed scalable backend services using <strong>Java + AWS S3</strong> for a Life Science & Healthcare enterprise platform in agile sprint cycles.</li>
+        <li>Engineered rich text messaging for Zendesk's product using <strong>Node.js + React</strong>, improving real-time communication reliability and UI responsiveness.</li>
+      </ul>
     </div>
-  </footer>
+    <div class="tli reveal">
+      <div class="tl-date">Oct 2021 – Mar 2022</div>
+      <div class="tl-co">DRDO — India</div>
+      <div class="tl-role">Project Intern</div>
+      <ul class="tl-ul">
+        <li>Designed PCB schematics for an <strong>EtherCAT controller card</strong> for advanced robotics applications alongside a team of engineers.</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-  <script src="script.js"></script>
+<div class="hr"></div>
+
+<!-- EDUCATION -->
+<div class="sw" id="education">
+  <p class="stag reveal">Academic Background</p>
+  <h2 class="stitle reveal">EDUCATION</h2>
+  <div class="edu-grid">
+    <div class="edu-card glass reveal">
+      <div class="edu-uni">Worcester Polytechnic Institute</div>
+      <div class="edu-deg">M.S. Robotics & Automation Engineering</div>
+      <div class="edu-yr">Aug 2024 – Present · Worcester, MA</div>
+      <div class="edu-gpa-wrap"><span class="edu-gpa">3.75</span><span class="edu-gpa-lbl">/ 4.0 GPA</span></div>
+      <div class="edu-info"><strong>Lab:</strong> Manipulation & Environmental Robotics (MER Lab)<br/><strong>Research:</strong> Vibration-Induced Variable Friction for Dexterous In-Hand Manipulation<br/><strong>Courses:</strong> Foundations of Robotics · Robot Dynamics · Control · Computer Vision · Motion Planning · Reinforcement Learning</div>
+    </div>
+    <div class="edu-card glass reveal">
+      <div class="edu-uni">Savitribai Phule Pune University</div>
+      <div class="edu-deg">B.E. Electronics & Telecommunication</div>
+      <div class="edu-yr">Aug 2018 – Aug 2022 · Pune, India</div>
+      <div class="edu-gpa-wrap"><span class="edu-gpa">3.94</span><span class="edu-gpa-lbl">/ 4.0 GPA</span></div>
+      <div class="edu-info"><strong>Courses:</strong> Digital Electronics · Microcontrollers · PCB Design · Signal & Systems<br/><strong>Award:</strong> IEEE Region 10 UG Project Contest — 3rd Place, Asia-Pacific 2022</div>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- PROJECTS -->
+<div class="sw" id="projects">
+  <p class="stag reveal">Built & Researched</p>
+  <h2 class="stitle reveal">PROJECTS</h2>
+  <div class="proj-grid">
+
+    <div class="proj-card glass feat reveal">
+      <span class="pbadge pk">IROS 2025 · Published</span>
+      <div class="pcat">Robotics · Embedded · Manipulation</div>
+      <div class="ptitle">VIVF Gripper — Vibration-Induced Friction Modulation</div>
+      <div class="pdesc">Novel robotic gripper using ERM actuators to modulate surface friction via vibration. Enables controlled in-hand sliding & rolling. Full embedded electronics system, automated ROS2 data pipeline with AprilTag, and a physics-based sim with &gt;90% experimental agreement.</div>
+      <div class="ptags"><span class="ptag">ROS2</span><span class="ptag">C++</span><span class="ptag">Python</span><span class="ptag">AprilTag</span><span class="ptag">Embedded</span><span class="ptag">Physics Sim</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">Computer Vision</span>
+      <div class="pcat">Autonomous Driving</div>
+      <div class="ptitle">VisionDrive — Tesla FSD Dashboard</div>
+      <div class="pdesc">YOLOv8 + Mask R-CNN multi-camera object detection. Depth Anything V2 monocular depth. Surround-view Tesla FSD-style interface.</div>
+      <div class="ptags"><span class="ptag">YOLOv8</span><span class="ptag">Mask R-CNN</span><span class="ptag">Depth Anything V2</span><span class="ptag">GPU Pipeline</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">3D Vision</span>
+      <div class="pcat">Neural Rendering</div>
+      <div class="ptitle">Buildings Built in Minutes — SfM & NeRF</div>
+      <div class="pdesc">3D reconstruction pipeline: SfM (feature matching, pose estimation, triangulation) + NeRF for novel view synthesis from sparse 2D images.</div>
+      <div class="ptags"><span class="ptag">NeRF</span><span class="ptag">SfM</span><span class="ptag">PyTorch</span><span class="ptag">3D Reconstruction</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">UAV · Control</span>
+      <div class="pcat">Control Systems</div>
+      <div class="ptitle">Crazyflie 2.0 Trajectory Tracking</div>
+      <div class="pdesc">Cascaded geometric controller in C++ fusing IMU + OptiTrack 6-DOF at 100 Hz. 3D RMSE reduced 35% (0.129 m), lateral RMSE 0.0169 m.</div>
+      <div class="ptags"><span class="ptag">C++</span><span class="ptag">ROS2</span><span class="ptag">IMU Fusion</span><span class="ptag">OptiTrack</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">Motion Planning</span>
+      <div class="pcat">Manipulation</div>
+      <div class="ptitle">Two Towers — Task & Motion Planning</div>
+      <div class="pdesc">TAMP system combining PDDL symbolic reasoning with OMPL geometric planning for autonomous block assembly.</div>
+      <div class="ptags"><span class="ptag">PDDL</span><span class="ptag">OMPL</span><span class="ptag">Python</span><span class="ptag">TAMP</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">Reinforcement Learning</span>
+      <div class="pcat">Multi-Agent Simulation</div>
+      <div class="ptitle">RL for Mixed Autonomous Traffic</div>
+      <div class="pdesc">Multi-agent PPO in SUMO + Flow optimizing mixed-autonomy traffic. Improved throughput and reduced congestion vs. baseline.</div>
+      <div class="ptags"><span class="ptag">PPO</span><span class="ptag">SUMO</span><span class="ptag">Multi-Agent RL</span><span class="ptag">Python</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">Computer Vision</span>
+      <div class="pcat">Image Processing</div>
+      <div class="ptitle">Panorama Stitching Pipeline</div>
+      <div class="pdesc">Full pipeline using OpenCV, RANSAC homography, feature matching, Poisson Blending, and HomographyNet.</div>
+      <div class="ptags"><span class="ptag">OpenCV</span><span class="ptag">RANSAC</span><span class="ptag">Homography</span><span class="ptag">Poisson Blending</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">Deep Learning</span>
+      <div class="pcat">Classical CV</div>
+      <div class="ptitle">Classical & DL Edge Detection</div>
+      <div class="pdesc">Boundary detection with DoG, Leung-Malik & Gabor filters. ResNet/DenseNet CNNs at 90% on CIFAR-10. Classical vs. learned comparison.</div>
+      <div class="ptags"><span class="ptag">ResNet</span><span class="ptag">DenseNet</span><span class="ptag">Gabor</span><span class="ptag">CIFAR-10</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj-card glass reveal">
+      <span class="pbadge">IoT</span>
+      <div class="pcat">Embedded Systems</div>
+      <div class="ptitle">Compost Monitoring — WSN / IoT</div>
+      <div class="pdesc">Wireless sensor network for real-time compost temperature monitoring. Custom Arduino firmware + GSM-based SMS alerting.</div>
+      <div class="ptags"><span class="ptag">Arduino</span><span class="ptag">GSM</span><span class="ptag">Embedded C</span><span class="ptag">WSN / IoT</span></div>
+      <div class="pfoot"><a class="plink" href="https://github.com/samie-n-19" target="_blank">↗ GitHub</a></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- PUBLICATIONS -->
+<div class="sw" id="publications">
+  <p class="stag reveal">Research Output</p>
+  <h2 class="stitle reveal">PUBLICATIONS</h2>
+  <div class="pub-stack">
+    <div class="pub-card glass reveal">
+      <div class="pub-venue-row"><span class="pub-venue">IEEE/RSJ IROS 2025</span><span class="pub-yr">Hangzhou, China · pp. 142–149</span></div>
+      <div class="pub-title">Vibration-induced Friction Modulation to Enable Controlled Sliding for In-hand Manipulation</div>
+      <div class="pub-authors"><strong>S. Naukudkar</strong>, S. Mane, A. Jagetia, A. S. Morgan, B. Calli</div>
+      <a class="pub-lnk" href="#" target="_blank">Read Paper ↗</a>
+    </div>
+    <div class="pub-card glass reveal">
+      <div class="pub-venue-row"><span class="pub-venue">IJEREEE</span><span class="pub-yr">Volume 10, Issue 10</span></div>
+      <div class="pub-title">Enhancing Operator Safety in Manufacturing: A Cost-Efficient Two-Hand Safety Device for Press Machines</div>
+      <div class="pub-authors"><strong>S. Naukudkar</strong>, S. Mathew</div>
+      <a class="pub-lnk" href="#" target="_blank">Read Paper ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ACHIEVEMENTS -->
+<div class="sw" id="achievements">
+  <p class="stag reveal">Recognition</p>
+  <h2 class="stitle reveal">ACHIEVEMENTS</h2>
+  <div class="ach-grid">
+    <div class="ach-card glass reveal">
+      <span class="ach-ico">🏆</span>
+      <div class="ach-title">IEEE REGION 10 AWARD</div>
+      <div class="ach-desc">3rd Place in the Asia-Pacific Undergraduate Project Contest 2022. Prize of $100 among top engineering undergraduates across the region.</div>
+    </div>
+    <div class="ach-card glass reveal">
+      <span class="ach-ico">📜</span>
+      <div class="ach-title">IROS 2025 PUBLICATION</div>
+      <div class="ach-desc">Peer-reviewed research on vibration-induced friction modulation for in-hand manipulation published at one of the premier global robotics conferences.</div>
+    </div>
+    <div class="ach-card glass reveal">
+      <span class="ach-ico">🎙️</span>
+      <div class="ach-title">VP — IEEE RAS @ WPI</div>
+      <div class="ach-desc">Vice President of the IEEE Robotics & Automation Society chapter at Worcester Polytechnic Institute, leading events and community building.</div>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- CONTACT -->
+<div class="sw" id="contact" style="text-align:center;">
+  <p class="stag reveal" style="justify-content:center;">Let's Connect</p>
+  <h2 class="stitle reveal" style="text-align:center;">GET IN <span class="ac">TOUCH</span></h2>
+  <p class="contact-intro reveal">Open to research collaborations, full-time roles in robotics and computer vision, and interesting problems worth solving together.</p>
+  <div class="contact-cards reveal">
+    <a class="ccard" href="mailto:naukudkar.samruddhi@gmail.com"><span class="c-ico">✉️</span><span class="c-lbl">Email</span><span class="c-val">Gmail</span></a>
+    <a class="ccard" href="https://github.com/samie-n-19" target="_blank"><span class="c-ico">🐙</span><span class="c-lbl">GitHub</span><span class="c-val">samie-n-19</span></a>
+    <a class="ccard" href="https://www.linkedin.com/in/samruddhi-naukudkar/" target="_blank"><span class="c-ico">💼</span><span class="c-lbl">LinkedIn</span><span class="c-val">Connect</span></a>
+    <a class="ccard" href="https://samie-n-19.github.io/" target="_blank"><span class="c-ico">🌐</span><span class="c-lbl">Portfolio</span><span class="c-val">Live Site</span></a>
+  </div>
+</div>
+
+<footer><p>Designed & built by <span>Samruddhi Naukudkar</span> · Worcester, MA · 2025</p></footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  setTimeout(()=>{curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';},80);
+});
+document.querySelectorAll('a,button,.glass').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';curR.style.width='56px';curR.style.height='56px';curR.style.borderColor='rgba(255,32,96,.6)';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';curR.style.width='36px';curR.style.height='36px';curR.style.borderColor='rgba(0,240,255,.5)';});
+});
+
+// PARTICLES
+const canvas=document.getElementById('bgc'),ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+const COLS=['rgba(0,240,255,','rgba(155,93,229,','rgba(255,32,96,','rgba(0,245,160,'];
+class P{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-.5)*.35;this.vy=(Math.random()-.5)*.35;this.r=Math.random()*1.4+.3;this.a=Math.random()*.45+.1;this.c=COLS[Math.floor(Math.random()*COLS.length)];this.life=0;this.max=200+Math.random()*300;}
+  update(){this.x+=this.vx;this.y+=this.vy;this.life++;if(this.life>this.max||this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height)this.reset();}
+  draw(){const a=Math.sin(this.life/this.max*Math.PI)*this.a;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.c+a+')';ctx.fill();}
+}
+const pts=Array.from({length:90},()=>new P());
+function frame(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<130){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(0,240,255,${.04*(1-d/130)})`;ctx.lineWidth=.5;ctx.stroke();}
+  }
+  pts.forEach(p=>{p.update();p.draw();});
+  requestAnimationFrame(frame);
+}
+frame();
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('up'),i*65);obs.unobserve(e.target);}});
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// NAV ACTIVE
+const navAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  document.querySelectorAll('[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-130)cur=s.id;});
+  navAs.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'var(--cyan)':'';});
+});
+</script>
 </body>
 </html>

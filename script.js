@@ -49,9 +49,20 @@ function setupCarousel() {
     }, 3400); // Transition every 3.4 seconds
     showSlide(idx);
 }
-document.addEventListener('DOMContentLoaded', function() {
-    setupCarousel();
-});
+// Image Carousel (hero background)
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.hero .carousel-img');
+    if (!slides.length) return;
+  
+    let idx = 0;
+    const show = i => slides.forEach((img, j) => img.classList.toggle('active', j === i));
+  
+    show(idx);
+    setInterval(() => {
+      idx = (idx + 1) % slides.length;
+      show(idx);
+    }, 3400);
+  });
 
 // Form submission handling
 if (contactForm) {
@@ -67,3 +78,58 @@ if (contactForm) {
         contactForm.reset();
     });
 }
+  
+// Typing animation for hero text
+document.addEventListener('DOMContentLoaded', function() {
+    const typingText = document.querySelector('.typing-text');
+    const cursor = document.querySelector('.cursor');
+    
+    if (!typingText) return; // Exit if element doesn't exist
+    
+    const phrases = [
+      "Motion Planner Engineer",
+      "Perception Enthusiast", 
+      "ROS Developer",
+      "Embedded Engineer"
+    ];
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100; // Speed of typing
+    let deleteSpeed = 50;  // Speed of deleting
+    let pauseTime = 2000;  // Pause between phrases
+    
+    function typeEffect() {
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (isDeleting) {
+        // Delete characters
+        typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(typeEffect, 200); // Short pause before typing next phrase
+          return;
+        }
+        setTimeout(typeEffect, deleteSpeed);
+      } else {
+        // Type characters
+        typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        
+        if (charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(typeEffect, pauseTime); // Pause before deleting
+          return;
+        }
+        setTimeout(typeEffect, typingSpeed);
+      }
+    }
+    
+    // Start the animation after a short delay
+    setTimeout(typeEffect, 1000);
+  });
+  
